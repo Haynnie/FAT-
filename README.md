@@ -1,1 +1,1 @@
-# FAT Association Documentations
+# FAT Association Documentation
