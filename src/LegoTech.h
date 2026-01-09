@@ -3,11 +3,8 @@
 
 #pragma once
 #include <Arduino.h>
-// #include "LegoLPF2_Consts.h"
-
 
 // FIRST BYTE
-
 // bits 7-6
 #define   MESSAGE_SYS                   0x00    // System message   0b00 << 6
 #define   MESSAGE_CMD                   0x40    // Command message  0b01 << 6
@@ -51,7 +48,6 @@
 #define   EXT_MODE_8                    0x08    // mode is >= 8
 
 // SECOND INFO BYTE
-
 #define   INFO_NAME                     0x00    // INFO command - NAME    (device name)
 #define   INFO_RAW                      0x01    // INFO command - RAW     (device RAW value span)
 #define   INFO_PCT                      0x02    // INFO command - PCT     (device PCT value span)
@@ -87,10 +83,10 @@ public:
     LegoLPF2(HardwareSerial& uart);
 
     void begin();
-    void poll();                 // keep-alive
+    void poll(); 
     void setMode(MotorMode mode);
-    void setPower(int8_t pct);   // -100..100
-    void setSpeed(int16_t dps);  // deg/s
+    void setPower(int8_t pct);
+    void setSpeed(int16_t dps); 
 
 private:
     HardwareSerial& _uart;
@@ -104,9 +100,6 @@ private:
 
 
 
-
-
-
 LegoLPF2::LegoLPF2(HardwareSerial& uart)
 : _uart(uart), _mode(0) {}
 
@@ -114,14 +107,11 @@ void LegoLPF2::begin() {
     _uart.begin(2400);
     delay(100);
 
-    // Wait for device messages (real code would parse INFO)
     delay(200);
 
-    // ACK sync
     _uart.write(BYTE_ACK);
 
-    // Switch baud to 115200
-    uint8_t speed[4] = { 0x00, 0xC2, 0x01, 0x00 }; // 115200 LE
+    uint8_t speed[4] = { 0x00, 0xC2, 0x01, 0x00 };
     sendCmd(MESSAGE_CMD | LENGTH_4 | CMD_SPEED, speed, 4);
 
     delay(50);
@@ -179,5 +169,6 @@ uint8_t LegoLPF2::checksum(const uint8_t* buf, uint8_t len) {
     }
     return c;
 }
+
 
 #endif
