@@ -23,7 +23,7 @@ void loop() {
     scurve.sMotion(targetDistance, sPD::HOLD);
 
     evo.writeLineToDisplay((String(leftMotor.getCount()) + ' ' + String(rightMotor.getCount())).c_str(), 0, true, true);
-    delay(100000);
+    while(1);
 }
 
 
@@ -45,3 +45,4 @@ void loop() {
 }
 
 #endif
+
